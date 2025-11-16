@@ -33,8 +33,12 @@ export default function LoginPage() {
       return;
     }
 
+    // ✅ Usa a URL do ambiente (local ou Vercel)
+    const redirectUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || 'https://fechou-finance.vercel.app';
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:3000/reset-password',
+      redirectTo: `${redirectUrl}/reset-password`,
     });
 
     if (error) {

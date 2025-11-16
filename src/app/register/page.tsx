@@ -26,20 +26,26 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
+
+    // ✅ Define a URL correta (Vercel ou local)
+    const redirectUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || 'https://fechou-finance.vercel.app';
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { name },
+        emailRedirectTo: `${redirectUrl}/dashboard`, // após confirmar e-mail
       },
     });
 
     if (error) {
       setMessage(`❌ Erro: ${error.message}`);
     } else {
-      setMessage('✅ Conta criada com sucesso! Redirecionando...');
-      setTimeout(() => router.push('/login'), 1500);
+      setMessage('✅ Conta criada! Verifique seu e-mail para confirmar o cadastro.');
     }
+
     setLoading(false);
   }
 

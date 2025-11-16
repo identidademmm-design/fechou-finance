@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌤️ Tema Claro (padrão) */
+body {
+  @apply bg-[#F8F9FA] text-gray-900 font-sans transition-all duration-300 ease-in-out;
+}
+
+button {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* 🌙 Tema Escuro Global */
+.dark body {
+  @apply bg-[#0d0d0d] text-gray-100;
+}
+
+/* 🔹 Sidebar e containers */
+.dark aside,
+.dark header,
+.dark main {
+  @apply bg-[#111] text-gray-100 border-gray-800;
+}
+
+/* 🔸 Títulos dourados (marca Fechou Finance) */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark .text-[#D4AF37] {
+  color: #d4af37 !important;
+}
+
+/* 🪶 Cards e containers */
+.dark .bg-white {
+  @apply bg-[#1a1a1a] border border-gray-800;
+}
+
+.dark .border-gray-200 {
+  @apply border-gray-800;
+}
+
+/* 🧾 Textos sutis */
+.dark .text-gray-500 {
+  @apply text-gray-400;
+}
+
+.dark .text-gray-600 {
+  @apply text-gray-300;
+}
+
+/* 🌕 Botões */
+.dark button {
+  @apply text-gray-100;
+}
+
+.dark button.bg-black {
+  @apply bg-[#222] hover:bg-[#333];
+}
+
+.dark button.bg-[#D4AF37] {
+  @apply text-black hover:bg-[#c19c32];
+}
+
+/* 🪄 Inputs e Selects */
+.dark input,
+.dark select,
+.dark textarea {
+  @apply bg-[#1a1a1a] border border-gray-700 text-gray-100 focus:ring-2 focus:ring-[#D4AF37] focus:outline-none;
+}
+
+/* 🌙 Corrige ícones do calendário e selects */
+.dark input[type="month"],
+.dark input[type="date"],
+.dark select {
+  color-scheme: dark;
+  background-color: #1a1a1a;
+  color: #f1f1f1;
+  border-color: #333;
+}
+
+.dark input[type="month"]::-webkit-calendar-picker-indicator,
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* 📊 Tabelas e listas */
+.dark table {
+  @apply text-gray-200;
+}
+
+.dark th {
+  @apply text-gray-400;
+}
+
+.dark tr {
+  @apply border-gray-800;
+}
+
+/* 🔘 Transições suaves */
+html,
+body {
+  transition: background-color 0.4s, color 0.4s;
+}
+
+/* ✨ Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d4af37;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1a1a1a;
+}

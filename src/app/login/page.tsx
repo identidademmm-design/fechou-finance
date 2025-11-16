@@ -99,6 +99,14 @@ export default function LoginPage() {
             >
               Esqueci minha senha
             </button>
+
+            {/* 🆕 Criar conta */}
+            <a
+              href="/register"
+              className="mt-2 w-full block text-center text-sm font-medium text-[#D4AF37] hover:underline dark:text-[#D4AF37]"
+            >
+              Criar uma conta
+            </a>
           </>
         )}
 

@@ -18,13 +18,12 @@ export default function Header() {
       const cached = localStorage.getItem('fechou_user');
       if (cached) setUser(JSON.parse(cached));
 
-      const { data, error } = await supabase.auth.getUser();
+      const { data } = await supabase.auth.getUser();
       if (data?.user) {
         setUser(data.user);
         localStorage.setItem('fechou_user', JSON.stringify(data.user));
-      } else if (error) {
-        console.warn('Nenhum usuário autenticado.');
       }
+
       setLoading(false);
     }
 
@@ -37,6 +36,7 @@ export default function Header() {
       } else {
         setUser(null);
         localStorage.removeItem('fechou_user');
+        router.refresh();   // 🔥 Atualiza sessão global
         router.push('/login');
       }
     });
@@ -47,6 +47,7 @@ export default function Header() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     localStorage.removeItem('fechou_user');
+    router.refresh();  // 🔥 Força atualização do app
     router.push('/login');
   };
 
@@ -57,7 +58,6 @@ export default function Header() {
       </h2>
 
       <div className="flex items-center gap-4">
-        {/* 🔔 Sininho com userId real */}
         <Notifications userId={user?.id} />
 
         <button

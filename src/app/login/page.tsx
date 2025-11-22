@@ -19,21 +19,23 @@ export default function LoginPage() {
     setMessage('');
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
+
     if (error) {
       setMessage('E-mail ou senha incorretos.');
     } else {
-      router.push('/dashboard');
+      await supabase.auth.refreshSession(); // 🔥 Atualiza sessão
+      router.refresh();                     // 🔥 Atualiza estado global
+      router.push('/dashboard');            // 🔥 Navega sem travar
     }
   };
 
-  // 🔁 Esqueci a senha
+  // 🔁 Reset de senha
   const handleResetPassword = async () => {
     if (!email) {
       setMessage('Digite seu e-mail para redefinir a senha.');
       return;
     }
 
-    // ✅ Usa a URL do ambiente (local ou Vercel)
     const redirectUrl =
       process.env.NEXT_PUBLIC_SITE_URL || 'https://fechou-finance.vercel.app';
 
@@ -56,7 +58,6 @@ export default function LoginPage() {
           bg-white border-gray-200 text-gray-900
           dark:bg-[#111] dark:border-gray-800 dark:text-gray-100"
       >
-        {/* Logo / Título */}
         <h1 className="text-3xl font-bold text-[#D4AF37] mb-2 text-center">
           Fechou Finance
         </h1>
@@ -64,7 +65,6 @@ export default function LoginPage() {
           Acesse sua conta
         </p>
 
-        {/* Campos */}
         <input
           type="email"
           placeholder="Seu e-mail"
@@ -104,7 +104,6 @@ export default function LoginPage() {
               Esqueci minha senha
             </button>
 
-            {/* 🆕 Criar conta */}
             <a
               href="/register"
               className="mt-2 w-full block text-center text-sm font-medium text-[#D4AF37] hover:underline dark:text-[#D4AF37]"
@@ -114,7 +113,6 @@ export default function LoginPage() {
           </>
         )}
 
-        {/* Reset de senha */}
         {isResetting && (
           <>
             <button
@@ -137,7 +135,6 @@ export default function LoginPage() {
           </>
         )}
 
-        {/* Mensagem */}
         {message && (
           <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
             {message}

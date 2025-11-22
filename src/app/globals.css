@@ -26,8 +26,15 @@ button {
 /* 🔸 Títulos dourados (marca Fechou Finance) */
 .dark h1,
 .dark h2,
-.dark h3,
-.dark .text-[#D4AF37] {
+.dark h3 {
+  color: #d4af37 !important;
+}
+
+/* Criamos uma classe sem colchetes para usar no lugar de text-[#D4AF37] */
+.ff-gold {
+  color: #d4af37 !important;
+}
+.dark .ff-gold {
   color: #d4af37 !important;
 }
 
@@ -54,12 +61,16 @@ button {
   @apply text-gray-100;
 }
 
-.dark button.bg-black {
+.dark .btn-black {
   @apply bg-[#222] hover:bg-[#333];
 }
 
-.dark button.bg-[#D4AF37] {
-  @apply text-black hover:bg-[#c19c32];
+.dark .btn-gold {
+  background-color: #d4af37 !important;
+  color: black !important;
+}
+.dark .btn-gold:hover {
+  background-color: #c19c32 !important;
 }
 
 /* 🪄 Inputs e Selects */

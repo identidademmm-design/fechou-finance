@@ -13,18 +13,10 @@ export function supabaseServer() {
           return cookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value, ...options });
-          } catch (e) {
-            console.error("Erro set cookie:", e);
-          }
+          cookieStore.set({ name, value, ...options });
         },
         remove(name: string, options: CookieOptions) {
-          try {
-            cookieStore.set({ name, value: "", ...options, maxAge: 0 });
-          } catch (e) {
-            console.error("Erro remove cookie:", e);
-          }
+          cookieStore.set({ name, value: "", ...options, maxAge: 0 });
         },
       },
     }

@@ -1,19 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
+import { supabaseServer } from "@/utils/supabase/server";
 
 export async function POST(req: NextRequest) {
-  const res = NextResponse.next();
-
   try {
     const body = await req.json();
 
-    const supabase = createClient(req, res);
+    // 🔥 Cria o cliente supabase do lado servidor (cookies automáticos)
+    const supabase = supabaseServer();
 
+    // 🔥 Obtém usuário autenticado
     const {
       data: { user },
+      error: userError
     } = await supabase.auth.getUser();
 
-    console.log("USUARIO LOGADO:", user);
+    if (userError) {
+      console.error("Erro getUser:", userError);
+      return NextResponse.json({ error: "Erro ao validar usuário" }, { status: 400 });
+    }
 
     if (!user) {
       return NextResponse.json(
@@ -24,6 +28,7 @@ export async function POST(req: NextRequest) {
 
     const { amount, description, type, profile_id, due_date } = body;
 
+    // 🔥 Insere a transação no Supabase
     const { data, error } = await supabase
       .from("transactions")
       .insert({
@@ -37,12 +42,16 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("Erro insert:", error);
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
 
     return NextResponse.json(data);
   } catch (error: any) {
+    console.error("Erro server:", error);
     return NextResponse.json(
-      { error: error.message || "Erro ao criar transação" },
+      { error: error.message ?? "Erro ao criar transação" },
       { status: 500 }
     );
   }

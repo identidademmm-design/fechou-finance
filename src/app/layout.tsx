@@ -1,6 +1,8 @@
 import './globals.css';
 import { ReactNode } from 'react';
 import Sidebar from '@/components/Sidebar';
+import ServiceWorkerRegister from '@/sw';
+import MobileHeader from '@/components/MobileHeader';
 
 export const metadata = {
   title: 'Fechou Finance',
@@ -9,10 +11,20 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    // 👇 Adicionamos suppressHydrationWarning para eliminar o aviso inofensivo
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        {/* ⚡ Script executa antes do React para aplicar o tema salvo no localStorage */}
+        {/* PWA */}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icons/icon-192.png" />
+        <meta name="theme-color" content="#000000" />
+
+        {/* ESSENCIAL PARA MOBILE PWA */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+
+        {/* Tema dark antes do React carregar */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -31,14 +43,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
 
-      <body className="bg-[#F8F9FA] dark:bg-[#0d0d0d] text-gray-900 dark:text-gray-100 font-sans flex min-h-screen transition-all">
-        {/* Sidebar fixa à esquerda */}
-        <aside className="w-64 fixed top-0 left-0 h-full bg-black z-20">
-          <Sidebar />
-        </aside>
+      <body className="bg-[#F8F9FA] dark:bg-[#0d0d0d] text-gray-900 dark:text-gray-100 font-sans min-h-screen transition-all">
 
-        {/* Conteúdo principal */}
-        <main className="flex-1 ml-64 p-8 overflow-y-auto">{children}</main>
+        {/* HEADER MOBILE */}
+        <MobileHeader />
+
+        <div className="flex">
+
+          {/* SIDEBAR DESKTOP – aparece só em telas grandes */}
+          <div className="hidden md:block w-64 fixed left-0 top-0 h-full">
+            <Sidebar />
+          </div>
+
+          {/* ÁREA PRINCIPAL */}
+          <main className="flex-1 md:ml-64 p-4 md:p-8">
+            {children}
+          </main>
+        </div>
+
+        {/* REGISTER DO SERVICE WORKER */}
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

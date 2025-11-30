@@ -16,21 +16,19 @@ button {
   @apply bg-[#0d0d0d] text-gray-100;
 }
 
-/* 🔹 Sidebar e containers */
+/* -------------- ⚠️ REMOVIDO (CAUSAVA BUG) --------------
+aside {
+  @apply bg-black text-white;
+}
+
 .dark aside,
 .dark header,
 .dark main {
   @apply bg-[#111] text-gray-100 border-gray-800;
 }
+--------------------------------------------------------- */
 
-/* 🔸 Títulos dourados (marca Fechou Finance) */
-.dark h1,
-.dark h2,
-.dark h3 {
-  color: #d4af37 !important;
-}
-
-/* Criamos uma classe sem colchetes para usar no lugar de text-[#D4AF37] */
+/* Títulos dourados (marca Fechou Finance) */
 .ff-gold {
   color: #d4af37 !important;
 }
@@ -80,7 +78,7 @@ button {
   @apply bg-[#1a1a1a] border border-gray-700 text-gray-100 focus:ring-2 focus:ring-[#D4AF37] focus:outline-none;
 }
 
-/* 🌙 Corrige ícones do calendário e selects */
+/* 🌙 Correção de inputs de calendário */
 .dark input[type="month"],
 .dark input[type="date"],
 .dark select {
@@ -95,7 +93,7 @@ button {
   filter: invert(1);
 }
 
-/* 📊 Tabelas e listas */
+/* 📊 Tabelas */
 .dark table {
   @apply text-gray-200;
 }
@@ -108,13 +106,39 @@ button {
   @apply border-gray-800;
 }
 
-/* 🔘 Transições suaves */
+/* ----------------- MOBILE SUPPORT ----------------- */
+
+/* Overlay da sidebar mobile */
+.mobile-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40;
+}
+
+/* Animação slide */
+@keyframes slide-right {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-right {
+  animation: slide-right 0.25s ease-out forwards;
+}
+
+/* Impede scroll ao abrir menu */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Transições suaves */
 html,
 body {
   transition: background-color 0.4s, color 0.4s;
 }
 
-/* ✨ Scrollbar personalizada */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

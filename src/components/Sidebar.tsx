@@ -20,27 +20,29 @@ const menuItems = [
   { name: 'Configurações', icon: Settings, href: '/settings' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-60 bg-black text-white flex flex-col justify-between shadow-2xl">
+    <div className="w-full h-full bg-black text-white flex flex-col">
       {/* Logo */}
       <div className="p-6 text-center border-b border-white/10">
-        <h1 className="text-2xl font-bold tracking-wide">
+        <h1 className="text-2xl font-bold">
           <span className="text-[#D4AF37]">Fechou</span> Finance
         </h1>
-        <p className="text-xs text-gray-400 mt-1">Gestão Simplificada</p>
+        <p className="text-xs text-gray-400">Gestão Simplificada</p>
       </div>
 
       {/* Menu */}
       <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
         {menuItems.map(({ name, icon: Icon, href }) => {
           const active = pathname === href;
+
           return (
             <Link
               key={href}
               href={href}
+              onClick={onNavigate}
               className={`flex items-center gap-3 px-4 py-2 rounded-xl transition-all ${
                 active
                   ? 'bg-[#D4AF37] text-black font-semibold shadow-md'
@@ -53,6 +55,6 @@ export default function Sidebar() {
           );
         })}
       </nav>
-    </aside>
+    </div>
   );
 }

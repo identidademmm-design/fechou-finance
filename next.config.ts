@@ -1,15 +1,28 @@
 import type { NextConfig } from 'next';
+import withPWA from 'next-pwa';
 
-const nextConfig: NextConfig = {
-  eslint: {
-    // ✅ Ignora avisos e erros do ESLint durante o build
-    ignoreDuringBuilds: true,
+const baseConfig: NextConfig = {
+  reactStrictMode: true,
+  output: 'export', // 👈 ESSA LINHA É OBRIGATÓRIA
+
+  experimental: {
+    webpackBuildWorker: false,
   },
+
+  webpack: (config) => {
+    return config;
+  },
+
+  turbopack: {},
+
   typescript: {
-    // ✅ Ignora erros de tipagem do TypeScript durante o build
     ignoreBuildErrors: true,
   },
-  reactStrictMode: true,
 };
 
-export default nextConfig;
+export default withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+})(baseConfig);
